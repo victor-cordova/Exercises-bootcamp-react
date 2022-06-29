@@ -1,3 +1,8 @@
-export const App = () => <h1>Hello React!!!!</h1>;
+import { ComponentA } from "../exercises/session123";
 
-export const numero = 5;
+export const App = () => {
+    
+    return (
+        <ComponentA/>
+    )
+};
