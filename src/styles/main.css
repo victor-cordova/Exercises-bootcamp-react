@@ -1,4 +1,33 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	/* --color-gray: #2c2c24;
+	--color-green: #18a9a0;
+	--color-header: #141414;
+
+	--font-size-title: 3.2rem;
+	--font-size-subtitle: 1.8rem;
+	--font-size-text: 1.4rem;
+	font-family: 'Source Code Pro', monospace;
+
+	font-family: 'Anton', sans-serif;
+
+	--font-family-title: 'Source Code Pro', monospace;
+	--font-weight-title: 900;
+
+	--font-family-text: 'Anton', sans-serif;
+	--font-weight-text: 500; */
+}
+
+html {
+	font-size: 62.5%;
+	/* color: #fff; */
+}
+
 body {
-	font-size: 20px;
-	color: red;
+	font-family:'Lato',sans-serif;
+	font-size: 1.2rem;
+	display: grid;
+	justify-items: center;
 }

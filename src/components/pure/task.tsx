@@ -2,37 +2,60 @@ import { useEffect } from "react";
 import { Task } from "../../constructors/task.constructor";
 
 //Importing styles
+import "../../styles/taskList.css";
 import "../../styles/task.css";
+import 'font-awesome/css/font-awesome.min.css';
+import { useHooks } from "../../hooks";
 
 interface Props {
 	task: Task,
+	deleteTask: (taskId: number) => void,
+	// modifyTasks: () => void,
 }
 
-const TaskComponent = ({task}: Props) => {
+const TaskComponent = ({deleteTask, task}: Props) => {
+
+	// const {
+	// 	tasks,
+	// 	// addTask,
+	// 	deleteTask,
+
+	// 	// loading,
+	// 	updateLoading,
+	// } = useHooks();
 
 	//Component's lifecycle
-	useEffect(() => {
-		console.log("Created task")
-		return () => {
-			console.log(`Task: ${task.name} will be unmounted.`)
-		}
-	}, [task]);
+	// useEffect(() => {
+	// 	console.log("Created task")
+	// 	return () => {
+	// 		console.log(`Task: ${task.name} will be unmounted.`)
+	// 	}
+	// }, [task]);
+
 
 	return (
-		<div className="task">
-			<h3 className="task__text">
-				Name: {task.name}
-			</h3>
-			<p className="task__text">
-				Description: {task.description}
+		<li className="tasks__item">
+			<p className="tasks__item-text">
+				{task.name}
 			</p>
-			<h3 className="task__text">
-				Level: {task.level}{/*By the name it can be known its urgency*/}
-			</h3>
-			<h3 className="task__text">
-				This task is: {task.completed? "completed": "pending"}
-			</h3>
-		</div>
+			<p className="tasks__item-text">
+				{task.description}
+			</p>
+			<div className={`tasks__item-level-container tasks__item-level-container--${task.level}`}>
+				<p className="tasks__item-text">
+					{task.level}{/*By the name it can be known its urgency*/}
+				</p>
+			</div>
+
+			<label className="switch">
+				<input type="checkbox" id="checker" className="switch__checker"/>
+				<label className="switch__slider" htmlFor="checker"></label>
+			</label>
+			{/* <p className="tasks__item-text">
+				{task.completed? "completed": "pending"}
+			</p> */}
+			<i className="fa-solid fa-trash-can" onClick={() => deleteTask(task.id)}/>
+		</li>
 	);
 };
 

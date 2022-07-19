@@ -4,9 +4,15 @@ class Task {
 	constructor (
 		public name: string,
 		public description: string,
-		public completed: boolean = false,
+		public id: number,
 		public level: LEVELS, //With it can be know if it's urgent or not.
+		public completed: boolean = false,
 	){}
+
+
+	public set newLevel(value : LEVELS) {
+		this.level = value;
+	}
 
 }
 
