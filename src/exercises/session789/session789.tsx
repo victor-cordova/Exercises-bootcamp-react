@@ -1,10 +1,6 @@
-// import * as React from 'react';
-
-import { useRef, useState } from "react";
-
 import { Contact } from "./contact.constructor";
+import { ContactForm } from "./contactForm";
 import { ONLINE_STATE } from "./online-state.model";
-import {  } from "./useContacts";
 
 interface ContactComponentProps {
 	contact: Contact,
@@ -13,18 +9,14 @@ interface ContactComponentProps {
 	updateOnlineState: (id: number, state: ONLINE_STATE) => void
 }
 
-// interface Contact {
-
-// }
-
-// const defaultVisible: boolean = false;
 
 interface ContactUIProps {
 	updateOnlineState: (id: number, state: ONLINE_STATE) => void,
+	deleteContact: (id: number) => void,
 	contact: Contact,
 }
 
-const ContactUI = ({updateOnlineState, contact}: ContactUIProps) => {
+const ContactUI = ({updateOnlineState, deleteContact, contact}: ContactUIProps) => {
 	return (
 		<div>
 			<h2>
@@ -34,27 +26,29 @@ const ContactUI = ({updateOnlineState, contact}: ContactUIProps) => {
 			<button onClick={() => updateOnlineState(contact.id, ONLINE_STATE.isConnected)}>
 				{contact.isConnected? "Disconnect": "Connect"}
 			</button>
+			<button onClick={() => deleteContact(contact.id)}>
+				Delete
+			</button>
 		</div>
 	)
 }
 
 const ContactComponent = ({
 	contact,
-	addContact,
 	deleteContact,
 	updateOnlineState,
 }: ContactComponentProps) => {
-
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	// console.log(ONLINE_STATE.connected)
-
 
 	return (
 		<li>
 			<button onClick={() => updateOnlineState(contact.id, ONLINE_STATE.isVisible)}>
 				{contact.isVisible? "Hide contact": "Show contact"}
 			</button>
-			{contact.isVisible && <ContactUI updateOnlineState={updateOnlineState} contact={contact}/>}
+			{contact.isVisible && <ContactUI
+				updateOnlineState={updateOnlineState}
+				contact={contact}
+				deleteContact={deleteContact}
+			/>}
 		</li>
 	)
 }
@@ -86,13 +80,8 @@ const ContactList = ({
 					/>
 				})}
 			</ul>
-			<form action="">
-				<input type="text" placeholder="Insert name"/>
-				<input type="text" placeholder="Insert lastname"/>
-				<button>Create contact</button>
-			</form>
-
-			{/* <button>Create contact</button> */}
+			<h2>Create contact</h2>
+			<ContactForm contacts={contacts} addContact={addContact}/>
 		</section>
 	);
 }

@@ -64,7 +64,6 @@ const useContacts = ({defaultContacts}: UseContactProps): {
 			return contact;
 		})
 
-		// console.log(contactsUpdated)
 		setContacts(contactsUpdated)
 	}
 

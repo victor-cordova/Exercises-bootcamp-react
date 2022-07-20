@@ -6,9 +6,9 @@ import { ContactList } from "../exercises/session789/session789";
 import { useContacts } from "../exercises/session789/useContacts";
 
 const defaultContacts = [
-	new Contact("Victor", "Cordova", 1, true, false),
-	new Contact("Alex", "Gusman", 2, false, true),
-	new Contact("Javier", "Baltazar", 3, true, false),
+	new Contact("Victor", "Cordova", 0, true, false),
+	new Contact("Alex", "Gusman", 1, false, true),
+	new Contact("Javier", "Baltazar", 2, true, false),
 ]
 
 export const App = () => {
