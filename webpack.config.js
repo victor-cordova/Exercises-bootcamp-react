@@ -34,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 
+        use: [MiniCssExtractPlugin.loader,
         "css-loader",
         ],
       },
@@ -58,7 +58,7 @@ module.exports = {
   //quetamiento.
     }),
     new MiniCssExtractPlugin({
-      filename: "./static/[name].[contenthash].css",
+      filename: "./styles/[name].[contenthash].css",
     }),
     new ImageMinimizerPlugin({
       minimizer: {

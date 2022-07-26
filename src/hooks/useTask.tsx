@@ -10,8 +10,21 @@ const useTask = ({ defaultTasks }: Props) => {
 	//Component's state
 	const [tasks, setTasks] = useState<Task[]>(defaultTasks);
 
-	const changeCompleted = (id: string) => {
-		console.log("TODO: Cambiar el estado de una tarea.")
+	const changeCompleted = (id: number) => {
+		const updatedTasks = tasks.map(task => {
+			if (task.id === id) {
+				return new Task(task.name, task.description, task.id, task.level, !task.completed);
+				// {
+
+				// 	...task,
+				// 	completed: !task.completed,
+				// }
+			}
+			return task;
+		});
+		setTasks(updatedTasks);
+		// console.log(updatedTasks);
+		// console.log("TODO: Cambiar el estado de una tarea.")
 	}
 
 	const deleteTask = (id:number) => {
@@ -34,6 +47,7 @@ const useTask = ({ defaultTasks }: Props) => {
 		tasks,
 		deleteTask,
 		addTask,
+		changeCompleted,
 	}
 }
 

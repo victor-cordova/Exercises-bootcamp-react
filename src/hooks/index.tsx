@@ -23,6 +23,7 @@ const useHooks = () => {
 		tasks,
 		addTask,
 		deleteTask,
+		changeCompleted,
 	} = useTask({defaultTasks})
 
 	const {
@@ -34,6 +35,7 @@ const useHooks = () => {
 		tasks,
 		addTask,
 		deleteTask,
+		changeCompleted,
 
 		loading,
 		updateLoading,

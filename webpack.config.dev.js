@@ -15,6 +15,9 @@ module.exports = {
       Images: path.resolve("src", "static", "images"),
     }
   },
+
+	devtool: 'inline-source-map',
+
   mode: "development",
   module: {
     rules: [
@@ -31,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 
+        use: [MiniCssExtractPlugin.loader,
         "css-loader",
         ],
       },

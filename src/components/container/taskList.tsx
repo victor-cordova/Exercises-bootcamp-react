@@ -13,19 +13,20 @@ interface Props {
 	tasks: Task[]
 	deleteTask: (id: number) => void,
 	updateLoading: () => void,
+	changeCompleted: (id: number) => void,
 }
 
-const TaskListComponent = ({tasks, deleteTask, updateLoading}: Props) => {
+const TaskListComponent = ({tasks, deleteTask, updateLoading, changeCompleted}: Props) => {
 
 	useEffect(() => {
 		// console.log("Component has been updated")
 		updateLoading();
-		console.log("new render1")
+		// console.log("new render1")
 		return () => {
 			// console.log("The component will be unmounted.")
 		}
 	}, [tasks]);
-	console.log("new render2")
+	// console.log("new render2")
 
 	return (
 		<section className="task-list">
@@ -52,7 +53,12 @@ const TaskListComponent = ({tasks, deleteTask, updateLoading}: Props) => {
 				</ul>
 				<ul className="tasks__container">
 					{tasks.map((task, index) => (
-						<TaskComponent task={task} key={index} deleteTask={deleteTask}/>
+						<TaskComponent
+							task={task}
+							key={index}
+							deleteTask={deleteTask}
+							changeCompleted={changeCompleted}
+						/>
 					))}
 				</ul>
 			</div>

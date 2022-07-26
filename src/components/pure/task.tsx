@@ -10,28 +10,11 @@ import { useHooks } from "../../hooks";
 interface Props {
 	task: Task,
 	deleteTask: (taskId: number) => void,
+	changeCompleted: (id: number) => void,
 	// modifyTasks: () => void,
 }
 
-const TaskComponent = ({deleteTask, task}: Props) => {
-
-	// const {
-	// 	tasks,
-	// 	// addTask,
-	// 	deleteTask,
-
-	// 	// loading,
-	// 	updateLoading,
-	// } = useHooks();
-
-	//Component's lifecycle
-	// useEffect(() => {
-	// 	console.log("Created task")
-	// 	return () => {
-	// 		console.log(`Task: ${task.name} will be unmounted.`)
-	// 	}
-	// }, [task]);
-
+const TaskComponent = ({deleteTask, task, changeCompleted}: Props) => {
 
 	return (
 		<li className="tasks__item">
@@ -48,8 +31,8 @@ const TaskComponent = ({deleteTask, task}: Props) => {
 			</div>
 
 			<label className="switch">
-				<input type="checkbox" id="checker" className="switch__checker"/>
-				<label className="switch__slider" htmlFor="checker"></label>
+				{/* <input type="checkbox" id="checker" className="switch__checker"/> */}
+				<label className={`switch__slider ${task.completed && "switch__slider--checked"}`} htmlFor="checker" onClick={() => changeCompleted(task.id)}></label>
 			</label>
 			{/* <p className="tasks__item-text">
 				{task.completed? "completed": "pending"}

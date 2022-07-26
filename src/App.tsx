@@ -1,9 +1,6 @@
 import React, { useRef } from "react";
 import { TaskListComponent } from "./components/container/taskList";
 import { TaskForm } from "./components/pure/forms/taskForm";
-import { Greetings } from "./components/pure/greetings";
-import { Example1 } from "./hooks/example1";
-import { Example2 } from "./hooks/example2";
 import { useHooks } from "./hooks";
 
 const App = () => {
@@ -13,12 +10,22 @@ const App = () => {
 		tasks,
 		deleteTask,
 		updateLoading,
+		changeCompleted,
+
 	} = useHooks();
 
 	return (
 			<React.Fragment>
-				<TaskListComponent deleteTask={deleteTask} updateLoading={updateLoading} tasks={tasks}/>
-				<TaskForm addTask={addTask} tasks={tasks}/>
+				<TaskListComponent
+					deleteTask={deleteTask}
+					updateLoading={updateLoading}
+					tasks={tasks}
+					changeCompleted={changeCompleted}
+				/>
+				<TaskForm
+					addTask={addTask}
+					tasks={tasks}
+				/>
 			</React.Fragment>
 	)
 }
