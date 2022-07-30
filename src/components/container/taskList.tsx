@@ -12,21 +12,60 @@ interface Props {
     // children: JSX.Element
 	tasks: Task[]
 	deleteTask: (id: number) => void,
+	loading: boolean,
 	updateLoading: () => void,
 	changeCompleted: (id: number) => void,
 }
 
-const TaskListComponent = ({tasks, deleteTask, updateLoading, changeCompleted}: Props) => {
+let taskTable: (() => JSX.Element) | null = null;
 
+const loadingTable = () => {
+	return (
+		<div>
+			<h2>Loading</h2>
+		</div>
+	)
+}
+
+const emptyTable = () => {
+	return (
+		<div>
+			<h2>There are not tasks</h2>
+			<h3>Please create some tasks</h3>
+		</div>
+	)
+}
+
+const TaskListComponent = ({tasks, deleteTask, loading, updateLoading, changeCompleted}: Props) => {
 	useEffect(() => {
 		// console.log("Component has been updated")
-		updateLoading();
-		// console.log("new render1")
+		setTimeout(() => {
+			updateLoading();
+		}, 100);
 		return () => {
-			// console.log("The component will be unmounted.")
 		}
-	}, [tasks]);
-	// console.log("new render2")
+	}, []);
+
+	taskTable = () => {
+		// console.log(tasks.length);
+		if (tasks.length && !loading) {
+			return (
+				<ul className="tasks__container">
+					{tasks.map((task, index) => (
+						<TaskComponent
+							task={task}
+							key={index}
+							deleteTask={deleteTask}
+							changeCompleted={changeCompleted}
+						/>
+					))}
+				</ul>
+			)
+		} else if (!tasks.length && !loading) {
+			return emptyTable();
+		}
+		return loadingTable();
+	}
 
 	return (
 		<section className="task-list">
@@ -51,16 +90,7 @@ const TaskListComponent = ({tasks, deleteTask, updateLoading, changeCompleted}: 
 						<h3>Actions</h3>
 					</li>
 				</ul>
-				<ul className="tasks__container">
-					{tasks.map((task, index) => (
-						<TaskComponent
-							task={task}
-							key={index}
-							deleteTask={deleteTask}
-							changeCompleted={changeCompleted}
-						/>
-					))}
-				</ul>
+				{taskTable()}
 			</div>
 		</section>
 	)

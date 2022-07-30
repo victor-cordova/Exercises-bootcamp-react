@@ -17,7 +17,7 @@ interface Props {
 const TaskComponent = ({deleteTask, task, changeCompleted}: Props) => {
 
 	return (
-		<li className="tasks__item">
+		<li className={`tasks__item tasks__item--${task.completed ? "completed":"pending"}`}>
 			<p className="tasks__item-text">
 				{task.name}
 			</p>

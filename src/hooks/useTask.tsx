@@ -12,6 +12,7 @@ const useTask = ({ defaultTasks }: Props) => {
 
 	const changeCompleted = (id: number) => {
 		const updatedTasks = tasks.map(task => {
+
 			if (task.id === id) {
 				return new Task(task.name, task.description, task.id, task.level, !task.completed);
 				// {
@@ -20,7 +21,9 @@ const useTask = ({ defaultTasks }: Props) => {
 				// 	completed: !task.completed,
 				// }
 			}
+
 			return task;
+
 		});
 		setTasks(updatedTasks);
 		// console.log(updatedTasks);
