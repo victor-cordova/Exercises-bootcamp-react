@@ -8,6 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: "[name].[contenthash].js",
     clean: true,
+		publicPath: "/",
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -51,7 +52,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      inject: "body", //Sirve para indicar en que lugar se colocará el archivo .js
+      inject: true, //Sirve para indicar en que lugar se colocará el archivo .js
   //en el body o en el head.
       template: "./public/index.html", //Se le indica que archivo de html va a empaquetar
       filename: "./index.html", //Se indica como se llamará el archivo que luego del empa
@@ -67,5 +68,6 @@ module.exports = {
     },
     compress: true,
     port: 9000,
+		historyApiFallback: true,
   },
 };

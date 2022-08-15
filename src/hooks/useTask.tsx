@@ -7,43 +7,36 @@ interface Props {
 
 const useTask = ({ defaultTasks }: Props) => {
 
-	//Component's state
 	const [tasks, setTasks] = useState<Task[]>(defaultTasks);
 
-	const changeCompleted = (id: number) => {
+	const changeCompleted = (id: number): void => {
 		const updatedTasks = tasks.map(task => {
 
 			if (task.id === id) {
-				return new Task(task.name, task.description, task.id, task.level, !task.completed);
-				// {
-
-				// 	...task,
-				// 	completed: !task.completed,
-				// }
+				return new Task(task.name, task.description, task.id, task.priority, !task.completed);
 			}
 
 			return task;
 
 		});
 		setTasks(updatedTasks);
-		// console.log(updatedTasks);
-		// console.log("TODO: Cambiar el estado de una tarea.")
 	}
 
-	const deleteTask = (id:number) => {
+	const deleteTask = (id:number): void => {
 
 		const filteredTasks = tasks.filter(task => task.id !== id);
 
 		setTasks(filteredTasks)
 	}
 
-	const addTask = (newTask: Task) => {
-		const updatedTasks: Task[] = [
+	const addTask = (newTask: Task | Task[]): void => {
+		const updatedTasks: (Task | Task[])[] = [
 			...tasks,
 			newTask,
 		]
+		const tasksFlated: Task[] = updatedTasks.flat();
 
-		setTasks(updatedTasks)
+		setTasks(tasksFlated);
 	}
 
 	return {

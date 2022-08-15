@@ -1,42 +1,31 @@
 import { ErrorMessage, Field, Formik, FormikHelpers } from "formik";
 import { Task } from "../../../constructors/task.constructor";
+import { TasksLS } from "../../../constructors/tasks.LS.constructor";
 import * as Yup from "yup";
-import { LEVELS } from "../../../models/levels.model";
+import { PRIORITIES } from "../../../models/priorities.enum";
+import { createId } from "../../../utils";
+import { DataLS } from "../../../constructors/data.LS.constructor";
+import { CreateTaskDto } from "../../../models/task.dto";
 
 export interface Props {
 	tasks: Task[],
 	addTask: (newTask: Task) => void,
+	taskLS: TasksLS,
+	dataLS: DataLS,
 }
 
-interface Data {
-	key: string,
-	value: string,
-}
-
-const initialValues = {
-	title: "",
+const initialValues: CreateTaskDto = {
+	name: "",
 	description: "",
-	priority: LEVELS.normal,
+	priority: PRIORITIES.normal,
 }
 
 const tooShort: string = "too short."
 const tooLong: string = "too long."
 const isRequired: string = "is required."
 
-interface ValuesI {
-	title: string;
-	description: string;
-	priority: LEVELS;
-}
-
-function createId(): number {
-	const max: number= 999999;
-	const min: number= 10000;
-	return Math.floor(Math.random() * (max - min) + min);
-}
-
 const taskSchema = Yup.object({
-	title: Yup.string()
+	name: Yup.string()
 		.min(2, `Title ${tooShort}`)
 		.max(12, `Title ${tooLong}`)
 		.required(`Title ${isRequired}`),
@@ -45,30 +34,20 @@ const taskSchema = Yup.object({
 		.max(12, `Description ${tooLong}`)
 		.required(`Description ${isRequired}`),
 	priority: Yup.string()
-		.oneOf([LEVELS.normal, LEVELS.urgent, LEVELS.blocking], "Must select a priority: Normal / Urgent / Blocking")
+		.oneOf([PRIORITIES.normal, PRIORITIES.urgent, PRIORITIES.blocking], "Must select a priority: Normal / Urgent / Blocking")
 		.required(`Priority ${isRequired}`),
 })
 
-const TaskForm = ({tasks, addTask}: Props) => {
+const TaskForm = ({addTask, taskLS, dataLS}: Props) => {
 
-	const getData = (data: ValuesI) => {
-
-		const totalData: Data[] = [
-			{key: "title", value: data.title},
-			{key: "description", value: data.description},
-			{key: "priority", value: data.priority},
-		];
-
-		return totalData;
-	}
-
-	const createTask = (values: ValuesI, actions: FormikHelpers<ValuesI>) => {
+	const createTask = (values: CreateTaskDto, actions: FormikHelpers<CreateTaskDto>) => {
 		actions.setSubmitting(false);
-		const newTask: Data[] = getData(values);
-		const priority: LEVELS = LEVELS[newTask[2].value as keyof typeof LEVELS];
-		const task = new Task(newTask[0].value, newTask[1].value, createId(), priority, false);
+		const priority: PRIORITIES = PRIORITIES[values.priority as keyof typeof PRIORITIES];
+		const task = new Task(values.name, values.description, createId(), priority, false);
 
 		addTask(task);
+		taskLS.addData(task);
+		dataLS.updateUserTasks(taskLS.getData());
 	}
 
 	return (
@@ -79,14 +58,14 @@ const TaskForm = ({tasks, addTask}: Props) => {
 		>
 			{ props => (
 				<form onSubmit={props.handleSubmit}>
-					<label htmlFor="title">Task title</label>
+					<label htmlFor="name">Task name</label>
 					<Field
-						placeholder="Insert title"
+						placeholder="Insert name"
 						type="text"
-						id="title"
-						name="title"
+						id="name"
+						name="name"
 					/>
-					{props.errors.title && <ErrorMessage name="title" component="div"/>}
+					{props.errors.name && <ErrorMessage name="name" component="div"/>}
 
 					<label htmlFor="description">Description</label>
 					<Field

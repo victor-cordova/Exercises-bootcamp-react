@@ -1,12 +1,12 @@
-import { ROLES } from "../models/roles.model";
+import { ROLES } from "../models/roles.enum";
 
 class User {
 	constructor(
-		public name: string,
+		public nickname: string,
 		public email: string,
 		public password: string,
+		public user: string,
 		public role: ROLES = ROLES.user,
-
 	) {}
 }
 

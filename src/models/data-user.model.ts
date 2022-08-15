@@ -1,6 +1,9 @@
-export interface IDataUser {
-	user: string,
-	name: string,
+import { ROLES } from "./roles.enum";
+
+export interface DataUser {
+	nickname: string,
+	id: number,
 	email: string,
 	password: string,
+	role: ROLES,
 }

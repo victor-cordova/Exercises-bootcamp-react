@@ -9,7 +9,7 @@ export interface Props {
 const  useLoading = ({defaultLoading}: Props) => {
 	const [loading, setLoading] = useState<boolean>(defaultLoading);
 
-	const updateLoading = () => {
+	const updateLoading = (): void => {
 		setLoading(!loading);
 	}
 

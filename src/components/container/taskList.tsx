@@ -1,20 +1,21 @@
 import "../../styles/taskList.css";
 
-import { useHooks } from "../../hooks";
-
 import { useEffect } from "react";
 import { Task } from "../../constructors/task.constructor";
-import { LEVELS } from "../../models/levels.model";
-import { ITask } from "../../models/task.model";
 import { TaskComponent } from "../pure/task";
+import { TasksLS } from "../../constructors/tasks.LS.constructor";
+import { DataLS } from "../../constructors/data.LS.constructor";
 
 interface Props {
-    // children: JSX.Element
-	tasks: Task[]
+	tasks: Task[],
 	deleteTask: (id: number) => void,
 	loading: boolean,
 	updateLoading: () => void,
 	changeCompleted: (id: number) => void,
+	addTask: (newTask: Task | Task[]) => void,
+	taskLS: TasksLS,
+	logged: boolean,
+	dataLS: DataLS,
 }
 
 let taskTable: (() => JSX.Element) | null = null;
@@ -36,18 +37,42 @@ const emptyTable = () => {
 	)
 }
 
-const TaskListComponent = ({tasks, deleteTask, loading, updateLoading, changeCompleted}: Props) => {
+const TaskListComponent = ({
+	tasks,
+	taskLS,
+	addTask,
+	deleteTask,
+	loading,
+	updateLoading,
+	changeCompleted,
+	logged,
+	dataLS,
+}: Props) => {
+
 	useEffect(() => {
-		// console.log("Component has been updated")
-		setTimeout(() => {
-			updateLoading();
-		}, 100);
+		let taskData: Task[] = [];
+
+		if (logged) {
+			taskData = dataLS.getUserTasks();
+			taskLS.addData(taskData);
+		} else {
+			taskData = taskLS.getData();
+		}
+
+			setTimeout(() => {
+				addTask(taskData);
+				updateLoading();
+			}, 100);
 		return () => {
 		}
 	}, []);
 
+	const updateDataLS = () => {
+		dataLS.updateUserTasks(taskLS.getData());
+	}
+
+
 	taskTable = () => {
-		// console.log(tasks.length);
 		if (tasks.length && !loading) {
 			return (
 				<ul className="tasks__container">
@@ -57,6 +82,8 @@ const TaskListComponent = ({tasks, deleteTask, loading, updateLoading, changeCom
 							key={index}
 							deleteTask={deleteTask}
 							changeCompleted={changeCompleted}
+							taskLS={taskLS}
+							updateDataLS={updateDataLS}
 						/>
 					))}
 				</ul>
