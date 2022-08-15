@@ -108,13 +108,16 @@ const App = () => {
 
 						<Route path="/about" element={<AboutPage/>} />
 						<Route path="/tasks" element={
+							logged ?
 
-						<TasksPage
-							taskLS={taskLS}
-							logged={logged}
-							dataLS={dataLS}
-						/>
-						} />
+							<TasksPage
+								taskLS={taskLS}
+								logged={logged}
+								dataLS={dataLS}
+							/>
+							:
+							<Navigate to="/"/>
+							} />
 
 						<Route path="/tasks/:id" element={<TaskPage
 							taskLS={taskLS}
